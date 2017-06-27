@@ -1,0 +1,28 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "import-spacing": false,
+        "typedef-whitespace": [
+            false
+        ],
+        "no-console": [
+            false
+        ],
+        "no-consecutive-blank-lines": false,
+        "interface-name": [
+            false
+        ],
+        "curly": [true, "ignore-same-line"],
+        "one-line": [
+            false
+        ],
+        "no-namespace": [
+            false
+        ]
+    },
+    "rulesDirectory": []
+}

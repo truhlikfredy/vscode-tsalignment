@@ -1,0 +1,48 @@
+import * as assert         from "assert";
+import * as vscode         from "vscode";
+import TSAlignment         from "../src/tsalignment";
+import * as basic          from "./dataBasicAlign";
+import * as mixing         from "./dataMixing";
+import * as regex          from "./dataRegex";
+import { ITestUnitConfig } from "./testUnitConfigI";
+
+suite("Basic Trivial Extension ALIGN Tests [basic,align]", () => {
+  basic.tests.forEach((testUnit) => {
+    test(testUnit.title, () => {
+      // if (testUnit.title !== "colon and equals") return;
+
+      TSAlignment.validateSettings(testUnit.config);
+
+      const alignFirstSymbolOnly: boolean = testUnit.alignFirstSymbolOnly == null ? false : true;
+      const myExtension = new TSAlignment(basic.input, testUnit.config, alignFirstSymbolOnly);
+
+      myExtension.alignLines();
+
+      assert.deepEqual(myExtension.lines, testUnit.expected);
+    });
+  });
+});
+
+suite("Regular expressions [basic,regex]", () => {
+  regex.tests.forEach((testUnit) => {
+    test(testUnit.title, () => {
+      TSAlignment.validateSettings(testUnit.config);
+      const myExtension = new TSAlignment(testUnit.input, testUnit.config, false);
+      myExtension.alignLines();
+
+      assert.deepEqual(myExtension.lines, testUnit.expected);
+    });
+  });
+});
+
+suite("Awkward mixing [basic,mixing]", () => {
+  mixing.tests.forEach((testUnit) => {
+    test(testUnit.title, () => {
+      TSAlignment.validateSettings(testUnit.config);
+      const myExtension = new TSAlignment(testUnit.input, testUnit.config, false);
+      myExtension.alignLines();
+
+      assert.deepEqual(myExtension.lines, testUnit.expected);
+    });
+  });
+});

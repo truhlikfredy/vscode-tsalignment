@@ -1,0 +1,194 @@
+{
+  "name": "tsalignment",
+  "displayName": "TS-Alignment of vertical tabs",
+  "description": "TS friendly vertical tab alignment tool",
+  "version": "0.9.0",
+  "publisher": "antonkrug",
+  "engines": {
+    "vscode": "^1.13.0"
+  },
+  "categories": [
+    "Formatters",
+    "Languages",
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:tsalignment.align",
+    "onCommand:tsalignment.alignFirstSymbolOnly"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "tsalignment.align",
+        "title": "TSAlign all chars"
+      },
+      {
+        "command": "tsalignment.alignFirstSymbolOnly",
+        "title": "TSAlign only the first symbol and ignore rest"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "tsalignment.align",
+        "key": "alt+=",
+        "when": "editorTextFocus && !editorReadOnly"
+      },
+      {
+        "command": "tsalignment.alignFirst",
+        "key": "alt+shift+=",
+        "when": "editorTextFocus && !editorReadOnly"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorHasSelection",
+          "command": "tsalignment.align",
+          "group": "alignment@1"
+        },
+        {
+          "when": "editorHasSelection",
+          "command": "tsalignment.alignFirstSymbolOnly",
+          "group": "alignment@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Alignment configuration",
+      "type": "object",
+      "properties": {
+        "tsalignment.typescript.symbols": {
+          "description": "TSAlignment symbols to align and their settings",
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "title": "Symbol settings",
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "description": "The symbol symbol on which the alignment will be executed",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "leftCount": {
+                "description": "Number of fixed minimal spaces before the symbol (-1 .. 100). The -1 will cause the symbol alignment to left side without spacing.",
+                "type": "number",
+                "default": 1,
+                "minimum": -1,
+                "maximum": 100
+              },
+              "leftCharacter": {
+                "description": "What character is used as the space before the symbol (default it's regular space ' ', but '\\t' could be used as well)",
+                "type": "string",
+                "required": false,
+                "default": " ",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "rightCount": {
+                "description": "Number of fixed minimal spaces after the symbol (-1 .. 100). The -1 will cause the symbol alignment to right side without spacing.",
+                "type": "number",
+                "default": 1,
+                "minimum": -1,
+                "maximum": 100
+              },
+              "rightCharacter": {
+                "description": "What character is used as the space after the symbol (default it's regular space ' ', but '\\t' could be used as well)",
+                "type": "string",
+                "required": false,
+                "default": " ",
+                "minLength": 1,
+                "maxLength": 100
+              },
+              "enabledRegex": {
+                "description": "Regex expression when the symbol will be active. (if not defined the symbol is active all the time, if this expression is defined, it will only be active when the expression is evaluated true and it is evaluated on line by line basis)",
+                "type": "string",
+                "required": false,
+                "default": "^.$",
+                "minLength": 1,
+                "maxLength": 200
+              }
+            }
+          },
+          "default": [
+            {
+              "symbol": "from",
+              "leftCount": 1,
+              "rightCount": 1,
+              "enabledRegex": "^\\s*import\\s"
+            },
+            {
+              "symbol": ":",
+              "leftCount": 0,
+              "rightCount": 1
+            },
+            {
+              "symbol": "::",
+              "leftCount": 0,
+              "rightCount": 0
+            },
+            {
+              "symbol": "=",
+              "leftCount": 1,
+              "rightCount": 1
+            },
+            {
+              "symbol": "===",
+              "leftCount": 1,
+              "rightCount": 1
+            },
+            {
+              "symbol": "==",
+              "leftCount": 1,
+              "rightCount": 1
+            },
+            {
+              "symbol": "=>",
+              "leftCount": 1,
+              "rightCount": 1
+            },
+            {
+              "symbol": "+=",
+              "leftCount": 1,
+              "rightCount": 1
+            },
+            {
+              "symbol": "-=",
+              "leftCount": 1,
+              "rightCount": 1
+            },
+            {
+              "symbol": "*=",
+              "leftCount": 1,
+              "rightCount": 1
+            },
+            {
+              "symbol": "/=",
+              "leftCount": 1,
+              "rightCount": 1
+            }
+          ]
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^6.0.78",
+    "@types/object-hash": "^0.5.28",
+    "mocha": "^2.5.3",
+    "object-hash": "^1.1.8",
+    "typescript": "^2.3.4",
+    "util": "^0.10.3",
+    "vscode": "^1.1.1"
+  }
+}
