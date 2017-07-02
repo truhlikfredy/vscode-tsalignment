@@ -111,37 +111,86 @@ export default class TSAlignment {
 
     // validate each item in detail
     alignSymbols.forEach((item) => {
-      if (item.symbol == null || item.symbol.length === 0) {
-        Helper.showError("A symbol character needs to be specified");
-      }
-
-      // fill default values in case if they are empty
-      if (item.leftCharacter == null) {
-        item.leftCharacter = " ";
-      }
-
-      if (item.rightCharacter == null) {
-        item.rightCharacter = " ";
-      }
-
-      // check the values for valid content
-      if (item.leftCharacter === "" || item.rightCharacter === "") {
-        Helper.showError("\"" + item.symbol + "\" needs to have  non empty character.");
-      }
-
-      if (item.leftCount < -1 || item.leftCount > 100 ||
-        item.rightCount < -1 || item.rightCount > 100) {
-        Helper.showError("Count setting for \"" + item.symbol + "\" symbol is out of range");
-      }
-
-      if (item.leftCount < 0 && item.rightCount < 0) {
-        Helper.showError("\"" + item.symbol + "\" cannot be aligned both left and right (-1 setting) at the same time");
-      }
-
-      if (item.enabledRegex != null && (item.enabledRegex.length === 0 || item.enabledRegex.length > 200)) {
-        Helper.showError("When the enabledRegex is set it needs to have valid length.");
-      }
+      this.isSymbolSet(item);
+      this.setDefaultSymbolValues(item);
+      this.isSymbolSettingValid(item);
+      this.isSymbolSettingCorrectRanges(item);
     });
+  }
+
+
+  /**
+   * Checks if settings are populated at all
+   *
+   * @param  {IConfigAlignSymbol} symbolSettings
+   * @returns boolean
+   */
+  private static isSymbolSet(symbolSettings: IConfigAlignSymbol): boolean {
+    if (symbolSettings.symbol == null || symbolSettings.symbol.length === 0) {
+      Helper.showError("A symbol character needs to be specified");
+    }
+    return true;
+  }
+
+
+
+  /**
+   * Populate settings with a default content.
+   *
+   * @param  {IConfigAlignSymbol} symbolSettings
+   */
+  private static setDefaultSymbolValues(symbolSettings: IConfigAlignSymbol) {
+    // fill default values in case if they are empty
+    if (symbolSettings.leftCharacter == null) {
+      symbolSettings.leftCharacter = " ";
+    }
+
+    if (symbolSettings.rightCharacter == null) {
+      symbolSettings.rightCharacter = " ";
+    }
+  }
+
+
+  /**
+   * Check if valid combinations are enabled
+   *
+   * @param  {IConfigAlignSymbol} symbolSettings
+   * @returns boolean
+   */
+  private static isSymbolSettingValid(symbolSettings: IConfigAlignSymbol): boolean {
+    // check the values for valid content
+    if (symbolSettings.leftCharacter === "" || symbolSettings.rightCharacter === "") {
+      Helper.showError("\"" + symbolSettings.symbol + "\" needs to have  non empty character.");
+
+    } else if (symbolSettings.enabledRegex != null &&
+              (symbolSettings.enabledRegex.length === 0 || symbolSettings.enabledRegex.length > 200)) {
+      Helper.showError("When the enabledRegex is set it needs to have valid length.");
+
+    }
+
+    return true;
+  }
+
+
+  /**
+   * Checks the symbol for valid ranges
+   *
+   * @param  {IConfigAlignSymbol} symbolSettings
+   * @returns boolean
+   */
+  private static isSymbolSettingCorrectRanges(symbolSettings: IConfigAlignSymbol): boolean {
+    // check the values for valid ranges
+
+    if (symbolSettings.leftCount  < -1 || symbolSettings.leftCount  > 100 ||
+        symbolSettings.rightCount < -1 || symbolSettings.rightCount > 100) {
+      Helper.showError("Count setting for \"" + symbolSettings.symbol + "\" symbol is out of range");
+
+    } else if (symbolSettings.leftCount < 0 && symbolSettings.rightCount < 0) {
+      Helper.showError("\"" + symbolSettings.symbol +
+        "\" cannot be aligned both left and right (-1 setting) at the same time");
+    }
+
+    return true;
   }
 
 
@@ -191,7 +240,6 @@ export default class TSAlignment {
     const range: vscode.Range = this.roundSelection(selection);
     const lines: string[]     = vscode.window.activeTextEditor.document.getText(range).split(/\r\n|\r|\n/);
 
-    // console.log(lines,range);
     return {
       lines,
       selectedRange: range,
@@ -326,7 +374,7 @@ export default class TSAlignment {
         position: line.indexOf(item.symbol, this.alreadyAligned), // -1 in case it is not found
         symbol:   item,
       }))
-      .sort((a, b) => a.position - b.position)  // smallest first
+      .sort((a, b) => a.position - b.position)    // smallest first
       .find((char) => char.position > -1);        // return the first good result
   }
 
@@ -350,7 +398,7 @@ export default class TSAlignment {
     this.doAlignmentAgain = true; // got result so we can tell do the loop again
 
     // chose the symbol to which everybody will align
-    this.alignSymbol = firstSymbols.sort((a, b) => a.position - a.position)[0].symbol;
+    this.alignSymbol = firstSymbols.sort((a, b) => a.position - b.position)[0].symbol;
 
     // find out where to align all lines
     this.alignEverythingHere = this.lines
@@ -396,6 +444,16 @@ export default class TSAlignment {
 
     const delta: number = this.alignEverythingHere - smallestIndex;
 
+    return this.lineToLeftRightOrMiddle(line, smallestIndex, delta);
+  }
+
+
+  /**
+   * Depending on the symbol settings it will be aligned left/right/middle
+   *
+   * @param  {} this.alignSymbol.leftCount<0
+   */
+  private lineToLeftRightOrMiddle(line: string, smallestIndex: number, delta: number): string {
     if (this.alignSymbol.leftCount < 0) {
       // if symbol should be aligned to LEFT:
       // 1) copy all text before and including symbol
@@ -417,23 +475,38 @@ export default class TSAlignment {
     }
     else {
       // if symbol will be spaced in the middle
-
-      let ret: string;
-      if (delta >= 0) {
-        // text is behind of the symbol alignment location
-        ret = line.slice(0, smallestIndex) +
-              this.alignSymbol.leftCharacter.repeat(delta + this.alignSymbol.leftCount);
-      } else {
-        // text is ahead of the symbol alignment location
-        ret = line.slice(0, this.alignEverythingHere) +
-              this.alignSymbol.leftCharacter.repeat(this.alignSymbol.leftCount);
-      }
-
-      // add the symbol and rest of the line after the symbol
-      return ret + this.alignSymbol.symbol +
-             this.alignSymbol.rightCharacter.repeat(this.alignSymbol.rightCount) +
-             line.slice(smallestIndex + this.alignSymbol.symbol.length).trimHead();
+      return this.lineToMiddle(line, smallestIndex, delta);
     }
   }
+
+
+
+  /**
+   * Align single line to middle even if the symbol is lagging/leading away
+   * from the desired alignment point.
+   *
+   * @param  {string} line
+   * @param  {number} smallestIndex
+   * @param  {number} delta
+   * @returns string
+   */
+  private lineToMiddle(line: string, smallestIndex: number, delta: number): string {
+    let ret: string;
+    if (delta >= 0) {
+      // text is behind of the symbol alignment location
+      ret = line.slice(0, smallestIndex) +
+        this.alignSymbol.leftCharacter.repeat(delta + this.alignSymbol.leftCount);
+    } else {
+      // text is ahead of the symbol alignment location
+      ret = line.slice(0, this.alignEverythingHere) +
+        this.alignSymbol.leftCharacter.repeat(this.alignSymbol.leftCount);
+    }
+
+    // add the symbol and rest of the line after the symbol
+    return ret + this.alignSymbol.symbol +
+      this.alignSymbol.rightCharacter.repeat(this.alignSymbol.rightCount) +
+      line.slice(smallestIndex + this.alignSymbol.symbol.length).trimHead();
+  }
+
 
 }
