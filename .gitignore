@@ -4,3 +4,5 @@
 node_modules
 out
 outSonar
+coverage/
+npm-debug.log
