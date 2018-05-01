@@ -11,5 +11,8 @@
         ".sonar": true,
         "outSonar": true,
         "coverage": true
-    }
+    },
+    "lcov.path": [
+        "coverage/lcov.info"
+    ] 
 }
