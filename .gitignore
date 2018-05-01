@@ -1,8 +1,8 @@
-.sonar
-.vscode/symbols.json
-.vscode-test
-node_modules
-out
-outSonar
-coverage/
-npm-debug.log
+/.sonar
+/.vscode/symbols.json
+/.vscode-test
+/node_modules
+/out
+/outSonar
+/coverage/
+/npm-debug.log
