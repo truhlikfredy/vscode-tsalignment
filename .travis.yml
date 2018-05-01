@@ -21,3 +21,4 @@ install:
 
 script:
   - npm test --silent
+  - ./node_modules/.bin/coveralls < ./coverage/lcov.info;
