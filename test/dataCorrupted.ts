@@ -28,4 +28,131 @@ export const tests: ITestUnitConfig[] = [
     config: [],
     title: "Empty config settings",
   },
+  {
+    config: [
+      {
+        leftCount: -1,
+        rightCount: 1,
+        symbol: "",
+      },
+    ],
+    expected: [],
+    title: "Empty symbol used in one entry",
+  },
+  {
+    config: [
+      {
+        leftCharacter: "",
+        leftCount: -1,
+        rightCount: 1,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Left character empty",
+  },
+  {
+    config: [
+      {
+        leftCharacter: "",
+        leftCount: -1,
+        rightCount: 1,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Right character empty",
+  },
+  {
+    config: [
+      {
+        leftCharacter: "",
+        leftCount: -1,
+        rightCharacter: "",
+        rightCount: 1,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Left and right characters are empty",
+  },
+  {
+    config: [
+      {
+        enabledRegex: "",
+        leftCount: -1,
+        rightCount: 1,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Empty regex",
+  },
+  {
+    config: [
+      {
+        enabledRegex: "lkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        leftCount: -1,
+        rightCount: 1,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Long regex",
+  },
+  {
+    config: [
+      {
+        leftCount: -2,
+        rightCount: 1,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Left -2",
+  },
+  {
+    config: [
+      {
+        leftCount: 101,
+        rightCount: 1,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Left 101",
+  },
+  {
+    config: [
+      {
+        leftCount: -1,
+        rightCount: -2,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Right -2",
+  },
+  {
+    config: [
+      {
+        leftCount: 1,
+        rightCount: 101,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Right 101",
+  },
+  {
+    config: [
+      {
+        leftCount: -1,
+        rightCount: -1,
+        symbol: "f",
+      },
+    ],
+    expected: [],
+    title: "Left and Right negative at the same time",
+  },
 ];
