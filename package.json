@@ -185,12 +185,13 @@
     "test:coverage": "npm run coverage && npm run test",
     "sonar:start-service": "sonar.sh start",
     "sonar:analyse": "mkdir -p ./outSonar && find ./outSonar/ -type f -delete && tsc --outDir ./outSonar && sonar-scanner",
-    "sonar:analyse-cloud": "mkdir -p ./outSonar && find ./outSonar/ -type f -delete && tsc --outDir ./outSonar && sonar-scanner -Dsonar.projectKey=ts-align -Dsonar.organization=truhlikfredy-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io  -Dsonar.sources=./outSonar -Dsonar.language=js -Dsonar.login=$SONAR_VSALIGN_TOKEN"
+    "sonar:analyse-cloud": "mkdir -p ./outSonar && find ./outSonar/ -type f -delete && tsc --outDir ./outSonar && sonar-scanner -Dsonar.projectKey=ts-align -Dsonar.organization=truhlikfredy-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io  -Dsonar.sources=./outSonar -Dsonar.language=js -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info -Dsonar.login=$SONAR_VSALIGN_TOKEN"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.41",
     "@types/node": "^6.0.78",
     "@types/object-hash": "^0.5.28",
+    "chai": "^4.1.2",
     "coveralls": "^3.0.1",
     "decache": "^4.4.0",
     "del": "^3.0.0",
