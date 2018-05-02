@@ -1,6 +1,7 @@
 import TSAlignment         from "../src/tsalignment";
 
 import * as basic          from "./dataBasicAlign";
+import * as corrupted      from "./dataCorrupted";
 import * as mixing         from "./dataMixing";
 import * as regex          from "./dataRegex";
 import { ITestUnitConfig } from "./testUnitConfigI";
@@ -43,6 +44,21 @@ suite("Awkward mixing [basic,mixing]", () => {
       myExtension.alignLines();
 
       assert.deepEqual(myExtension.lines, testUnit.expected);
+    });
+  });
+});
+
+suite("UI [basic,ui]", () => {
+  test("static align without editor", () => {
+    TSAlignment.align();
+  });
+});
+
+suite("Corrupted configs [basic,faulty]", () => {
+  corrupted.tests.forEach((testUnit) => {
+    // expect.to.
+    test(testUnit.title, () => {
+      assert.throws( () => TSAlignment.validateSettings(testUnit.config), Error);
     });
   });
 });
