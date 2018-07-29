@@ -5,7 +5,6 @@ import testIstanbulRunner = require("./istanbultestrunner");
 // https://github.com/kenhowardpdx/vscode-gist/pull/10
 
 testIstanbulRunner.configure({
-    // reporter: "list",
     ui: "tdd",
     useColors: true,
 }, {

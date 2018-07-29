@@ -24,8 +24,8 @@ export const tests: ITestUnitConfig[] = [
     title: "Duplicate entry in config",
   },
   {
-    expected: [],
     config: [],
+    expected: [],
     title: "Empty config settings",
   },
   {
@@ -91,7 +91,32 @@ export const tests: ITestUnitConfig[] = [
   {
     config: [
       {
-        enabledRegex: "lkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        enabledRegex: "lkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaa " +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaal" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+          "kjfdsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalkjfdsaaaaaaaaaaaaaaaaaaaaaaaaaa",
         leftCount: -1,
         rightCount: 1,
         symbol: "f",
