@@ -16,3 +16,5 @@ Visual Studio Code Extension - TypeScript centric vertical alignment tool
 [![Build Status](https://sonarcloud.io/api/project_badges/measure?project=ts-align&metric=sqale_index)](https://sonarcloud.io/dashboard?id=ts-align)
 [![Build Status](https://sonarcloud.io/api/project_badges/measure?project=ts-align&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=ts-align)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d71e813e974443e5b7a7cdb7ebdda3ea)](https://www.codacy.com/app/truhlikfredy/vscode-tsalignment?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=truhlikfredy/vscode-tsalignment&amp;utm_campaign=Badge_Grade)
+
