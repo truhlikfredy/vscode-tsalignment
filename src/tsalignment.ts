@@ -8,7 +8,6 @@ import { IConfigAlignSymbol } from "./tsalignment";
  * TODO detect multi cursor (many single character selections)
  * TODO timeout watchdog for all execution to kill anything stuck for the worst case
  * TODO public/private  and static, const readonly alignment
- * TODO settings validator unit tests
  * TODO proper multi source-code-language support settings (code works, but settings json specs not yet)
  */
 
@@ -66,6 +65,10 @@ String.prototype.trimTail = function(): string {
 
 export default class TSAlignment {
 
+  // ************************** static fields **************************
+
+  public static localPrioritySettings: IConfigAlignSymbol[];
+
   // ************************** static methods *************************
 
   /**
@@ -116,6 +119,24 @@ export default class TSAlignment {
       this.isSymbolSettingValid(item);
       this.isSymbolSettingCorrectRanges(item);
     });
+  }
+
+
+  /**
+   * Clears local settings
+   */
+  public static emptyLocalSettings() {
+    this.localPrioritySettings = null;
+  }
+
+
+  /**
+   * Uses given argument as the new local settings after they were validated
+   * @param newSettings
+   */
+  public static setLocalSettings(newSettings: IConfigAlignSymbol[]) {
+    this.validateSettings(newSettings);
+    this.localPrioritySettings = newSettings;
   }
 
 
@@ -259,7 +280,10 @@ export default class TSAlignment {
     const language: string = vscode.window.activeTextEditor.document.languageId;
 
     // get the character settings from the configuration file
-    const alignSymbols: IConfigAlignSymbol[] = vscode.workspace.getConfiguration("tsalignment." + language).symbols;
+    const alignSymbols: IConfigAlignSymbol[] =
+      (this.localPrioritySettings == null) ?
+        vscode.workspace.getConfiguration("tsalignment." + language).symbols :
+        this.localPrioritySettings;
 
     this.validateSettings(alignSymbols);
 
