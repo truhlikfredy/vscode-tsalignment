@@ -48,7 +48,7 @@ declare global {
  *
  * @returns string
  */
-String.prototype.trimHead = function(): string {
+String.prototype.trimHead = (): string => {
   return this.replace(/^\s+/g, "");
 };
 
@@ -103,7 +103,9 @@ export default class TSAlignment {
    */
   public static validateSettings(alignSymbols: IConfigAlignSymbol[]) {
     // validate if all settings are correctly specified as expected
-    if (!alignSymbols || alignSymbols.length === 0) Helper.showError("No settings specified, need at lest one symbol");
+    if (!alignSymbols || alignSymbols.length === 0) {
+      Helper.showError("No settings specified, need at lest one symbol");
+    }
 
     // detect duplicates, duplicate symbol is allowed if has different settings (regex condition)
     const unique: Set<string> = new Set();
@@ -418,7 +420,9 @@ export default class TSAlignment {
     });
 
     this.doAlignmentAgain = false;
-    if (firstSymbols.length === 0) return; // exit if nothing found
+    if (firstSymbols.length === 0) {
+      return; // exit if nothing found
+    }
     this.doAlignmentAgain = true; // got result so we can tell do the loop again
 
     // chose the symbol to which everybody will align
@@ -464,7 +468,9 @@ export default class TSAlignment {
     const smallestIndex: number = line.indexOf(this.alignSymbol.symbol, this.alreadyAligned);
 
     // if nothing found, do not change anything and exit
-    if (smallestIndex === -1) return line;
+    if (smallestIndex === -1) {
+      return line;
+    }
 
     const delta: number = this.alignEverythingHere - smallestIndex;
 

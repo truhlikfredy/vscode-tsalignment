@@ -2,24 +2,24 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
 
-'use strict';
-import paths = require('path');
-const fs = require('fs');
-import Mocha = require('mocha');
-import istanbul = require('istanbul');
+"use strict";
+import paths = require("path");
+const fs = require("fs");
+import Mocha = require("mocha");
+import istanbul = require("istanbul");
 
 let glob = require("glob");
-let remapIstanbul = require('remap-istanbul');
+let remapIstanbul = require("remap-istanbul");
 
 // Linux: prevent a weird NPE when mocha on Linux requires the window size from the TTY
-// Since we are not running in a tty environment, we just implementt he method statically
-let tty = require('tty');
+// Since we are not running in a tty environment, we just implement the method statically
+let tty = require("tty");
 if (!tty.getWindowSize) {
   tty.getWindowSize = function (): number[] { return [80, 75]; };
 }
 
 let mocha = new Mocha(<any>{
-  ui: 'tdd',
+  ui: "tdd",
   useColors: true
 });
 
@@ -59,7 +59,7 @@ export function run(testsRoot, clb): any {
   }
 
   // Glob test files
-  glob('**/**.test.js', { cwd: testsRoot }, function (error, files): any {
+  glob("**/**.test.js", { cwd: testsRoot }, function (error, files): any {
     if (error) {
       return clb(error);
     }
@@ -72,10 +72,10 @@ export function run(testsRoot, clb): any {
       let failureCount = 0;
 
       (<any>mocha.run())
-        .on('fail', function (test, err): void {
+        .on("fail", function (test, err): void {
           failureCount++;
         })
-        .on('end', function (): void {
+        .on("end", function (): void {
           clb(undefined, failureCount);
         });
     } catch (error) {
@@ -96,7 +96,7 @@ interface ITestRunnerOptions {
 
 class CoverageRunner {
 
-  private coverageVar: string = '$$cov_' + new Date().getTime() + '$$';
+  private coverageVar: string = "$$cov_" + new Date().getTime() + "$$";
   private transformer: any = undefined;
   private matchFn: any = undefined;
   private instrumenter: any = undefined;
@@ -115,13 +115,13 @@ class CoverageRunner {
     let sourceRoot = paths.join(self.testsRoot, self.options.relativeSourcePath);
 
     // Glob source files
-    let srcFiles = glob.sync('**/**.js', {
+    let srcFiles = glob.sync("**/**.js", {
       ignore: self.options.ignorePatterns,
       cwd: sourceRoot
     });
 
     // Create a match function - taken from the run-with-cover.js in istanbul.
-    let decache = require('decache');
+    let decache = require("decache");
     let fileMap = {};
     srcFiles.forEach((file) => {
       let fullPath = paths.join(sourceRoot, file);
@@ -143,7 +143,7 @@ class CoverageRunner {
     // are required, the instrumented version is pulled in instead. These instrumented versions
     // write to a global coverage variable with hit counts whenever they are accessed
     self.transformer = self.instrumenter.instrumentSync.bind(self.instrumenter);
-    let hookOpts = { verbose: false, extensions: ['.js'] };
+    let hookOpts = { verbose: false, extensions: [".js"] };
     (<any>istanbul.hook).hookRequire(self.matchFn, self.transformer, hookOpts);
 
     // initialize the global variable to stop mocha from complaining about leaks
@@ -151,7 +151,7 @@ class CoverageRunner {
 
     // Hook the process exit event to handle reporting
     // Only report coverage if the process is exiting successfully
-    process.on('exit', (code) => {
+    process.on("exit", (code) => {
       self.reportCoverage();
     });
   }
@@ -196,12 +196,12 @@ class CoverageRunner {
     // TODO Allow config of reporting directory with
     let reportingDir = paths.join(self.testsRoot, self.options.relativeCoverageDir);
     let includePid = self.options.includePid;
-    let pidExt = includePid ? ('-' + process.pid) : '',
-      coverageFile = paths.resolve(reportingDir, 'coverage' + pidExt + '.json');
+    let pidExt = includePid ? ("-" + process.pid) : "",
+      coverageFile = paths.resolve(reportingDir, "coverage" + pidExt + ".json");
 
     _mkDirIfExists(reportingDir); // yes, do this again since some test runners could clean the dir initially created
 
-    fs.writeFileSync(coverageFile, JSON.stringify(cov), 'utf8');
+    fs.writeFileSync(coverageFile, JSON.stringify(cov), "utf8");
 
     let remappedCollector: istanbul.Collector = remapIstanbul.remap(cov, {
       warn: (warning) => {
@@ -213,8 +213,8 @@ class CoverageRunner {
       }
     });
 
-    let reporter = new istanbul.Reporter(undefined, reportingDir);
-    let reportTypes = (self.options.reports instanceof Array) ? self.options.reports : ['lcov'];
+    const reporter = new istanbul.Reporter(undefined, reportingDir);
+    const reportTypes = (self.options.reports instanceof Array) ? self.options.reports : ["lcov"];
     reporter.addAll(reportTypes);
     reporter.write(remappedCollector, true, () => {
       console.log(`reports written to ${reportingDir}`);
